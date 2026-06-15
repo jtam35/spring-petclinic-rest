@@ -16,7 +16,6 @@
 
 package org.springframework.samples.petclinic.repository.jpa;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,7 +26,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Pet;
 import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.model.Visit;
 import org.springframework.samples.petclinic.repository.PetTypeRepository;
 import org.springframework.stereotype.Repository;
 
@@ -75,18 +73,13 @@ public class JpaPetTypeRepositoryImpl implements PetTypeRepository {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void delete(PetType petType) throws DataAccessException {
-		this.em.remove(this.em.contains(petType) ? petType : this.em.merge(petType));
 		Integer petTypeId = petType.getId();
 
-		List<Pet> pets = this.em.createQuery("SELECT pet FROM Pet pet WHERE type.id=" + petTypeId).getResultList();
-		for (Pet pet : pets){
-			List<Visit> visits = pet.getVisits();
-			for (Visit visit : visits){
-				this.em.createQuery("DELETE FROM Visit visit WHERE id=" + visit.getId()).executeUpdate();
-			}
-			this.em.createQuery("DELETE FROM Pet pet WHERE id=" + pet.getId()).executeUpdate();
+		List<Pet> pets = this.em.createQuery("SELECT pet FROM Pet pet WHERE type.id=" + petTypeId, Pet.class).getResultList();
+		for (Pet pet : pets) {
+			this.em.remove(pet);
 		}
-		this.em.createQuery("DELETE FROM PetType pettype WHERE id=" + petTypeId).executeUpdate();
+		this.em.remove(this.em.contains(petType) ? petType : this.em.merge(petType));
 	}
 
 }
