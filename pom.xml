@@ -13,14 +13,16 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.1</version>
+        <version>3.5.15</version>
         <relativePath/> <!-- lookup parent from Maven repository -->
     </parent>
 
     <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+
         <!-- Third-party libraries -->
         <spring-data-jdbc.version>1.2.1.RELEASE</spring-data-jdbc.version>
-        <springdoc-openapi-ui.version>2.0.2</springdoc-openapi-ui.version>
+        <springdoc-openapi-ui.version>2.8.17</springdoc-openapi-ui.version>
         <jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
         <mapstruct.version>1.4.1.Final</mapstruct.version>
         <jaxb-api.version>2.3.0</jaxb-api.version>
@@ -33,7 +35,7 @@
         <!-- Docker -->
         <docker.jib-maven-plugin.version>3.4.0</docker.jib-maven-plugin.version>
         <docker.image.prefix>springcommunity</docker.image.prefix>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.14.1</maven-compiler-plugin.version>
     </properties>
 
     <dependencies>
